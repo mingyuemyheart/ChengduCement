@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="40dp">
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_corner_top_white"
+        android:gravity="center"
+        android:lineSpacingExtra="3dp"
+        android:minWidth="260dp"
+        android:minHeight="100dp"
+        android:padding="10dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/level_3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNegtive"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_update_left"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/text_color3"
+        android:textSize="@dimen/level_4"
+        app:layout_constraintEnd_toStartOf="@+id/tvPositive"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvContent" />
+
+    <TextView
+        android:id="@+id/tvPositive"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_update_right"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/level_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvNegtive"
+        app:layout_constraintTop_toBottomOf="@+id/tvContent" />
+
+</android.support.constraint.ConstraintLayout>
+

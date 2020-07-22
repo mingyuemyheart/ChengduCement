@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/banner_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/icon_app"
+        app:layout_constraintBottom_toBottomOf="@+id/ivBanner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBanner" />
+
+    <EditText
+        android:id="@+id/etUserName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/bg_corner_pwd"
+        android:gravity="center"
+        android:hint="请输入您的账号"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:singleLine="true"
+        android:textColor="@color/text_color4"
+        android:textColorHint="@color/text_color2"
+        android:textSize="@dimen/level_4"
+        app:layout_constraintTop_toBottomOf="@+id/ivIcon" />
+
+    <ImageView
+        android:id="@+id/ivUser"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="25dp"
+        android:src="@drawable/icon_user"
+        app:layout_constraintBottom_toBottomOf="@+id/etUserName"
+        app:layout_constraintStart_toStartOf="@+id/etUserName"
+        app:layout_constraintTop_toTopOf="@+id/etUserName" />
+
+    <EditText
+        android:id="@+id/etPwd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/bg_corner_pwd"
+        android:gravity="center"
+        android:hint="请输入您的密码"
+        android:inputType="textPassword"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:singleLine="true"
+        android:textColor="@color/text_color4"
+        android:textColorHint="@color/text_color2"
+        android:textSize="@dimen/level_4"
+        app:layout_constraintTop_toBottomOf="@+id/etUserName" />
+
+    <ImageView
+        android:id="@+id/ivPwd"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="25dp"
+        android:src="@drawable/icon_pwd"
+        app:layout_constraintBottom_toBottomOf="@+id/etPwd"
+        app:layout_constraintStart_toStartOf="@+id/etPwd"
+        app:layout_constraintTop_toTopOf="@+id/etPwd" />
+
+    <TextView
+        android:id="@+id/tvForgetUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="忘记用户名"
+        android:textColor="@color/white"
+        android:textSize="@dimen/level_4"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPwd" />
+
+    <TextView
+        android:id="@+id/tvForgetPwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="忘记密码?"
+        android:textColor="@color/white"
+        android:textSize="@dimen/level_4"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPwd" />
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/selector_login"
+        android:gravity="center_vertical|center"
+        android:orientation="horizontal"
+        android:text="登  录"
+        android:textColor="@color/white"
+        android:textSize="@dimen/level_2"
+        app:layout_constraintTop_toBottomOf="@+id/tvForgetUser" />
+
+    <TextView
+        android:id="@+id/tvRegister"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/selector_login"
+        android:gravity="center_vertical|center"
+        android:orientation="horizontal"
+        android:text="注  册"
+        android:textColor="@color/white"
+        android:textSize="@dimen/level_2"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+</android.support.constraint.ConstraintLayout>

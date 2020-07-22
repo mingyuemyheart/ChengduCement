@@ -1,0 +1,2 @@
+rootProject.name='ChengduCement'
+include ':app'
