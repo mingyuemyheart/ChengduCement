@@ -66,7 +66,7 @@ class LoginActivity : BaseActivity(), OnClickListener {
 		val url = "${CONST.BASE_URL}/reLogin/loginToken"
 		val builder = FormBody.Builder()
 		builder.add("account", etUserName!!.text.toString())
-		builder.add("password", etPwd.text.toString())
+		builder.add("password", CommonUtil.encrypt(etPwd.text.toString(), "SHA-256"))
 		builder.add("clientId", CONST.CLIENDID)
 		val body: RequestBody = builder.build()
 		Thread(Runnable {
@@ -95,7 +95,7 @@ class LoginActivity : BaseActivity(), OnClickListener {
 										MyApplication.saveUserInfo(this@LoginActivity)
 										val intent = Intent(this@LoginActivity, MainActivity::class.java)
 										intent.putExtra(CONST.ACTIVITY_NAME, "测试")
-										intent.putExtra(CONST.WEB_URL, "http://www.baidu.com")
+										intent.putExtra(CONST.WEB_URL, "http://192.168.1.205:1234/Sandcastle_lightWeight2.0/demo/examples/default/if_ioc_map.html")
 										startActivity(intent)
 										finish()
 									} else {

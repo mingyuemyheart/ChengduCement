@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -538,6 +539,43 @@ public class CommonUtil {
         intent.setData(uri);//这里采用传入文档的在线地址进行打开，免除下载的步骤，也不需要判断安卓版本号
         intent.putExtras(bundle);
         context.startActivity(intent);
+    }
+
+    /**
+     * 加密
+     * @param strSrc
+     * @param encName
+     * @return
+     */
+    public static String encrypt(String strSrc, String encName) {
+        MessageDigest md;
+        String strDes;
+
+        byte[] bt = strSrc.getBytes();
+        try {
+            if (encName == null || encName.equals("")) {
+                encName = "SHA-256";
+            }
+            md = MessageDigest.getInstance(encName);
+            md.update(bt);
+            strDes = bytes2Hex(md.digest()); // to HexString
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
+        return strDes;
+    }
+
+    private static String bytes2Hex(byte[] bts) {
+        String des = "";
+        String tmp;
+        for (int i = 0; i < bts.length; i++) {
+            tmp = (Integer.toHexString(bts[i] & 0xFF));
+            if (tmp.length() == 1) {
+                des += "0";
+            }
+            des += tmp;
+        }
+        return des;
     }
 
 }
