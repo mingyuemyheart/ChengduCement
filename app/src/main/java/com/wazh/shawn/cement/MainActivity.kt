@@ -1,10 +1,12 @@
 package com.wazh.shawn.cement
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnClickListener
@@ -24,6 +26,7 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONObject
 import java.io.IOException
+
 
 class MainActivity : BaseActivity(), OnClickListener {
 
@@ -86,7 +89,7 @@ class MainActivity : BaseActivity(), OnClickListener {
             webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
         webView.loadUrl(url)
-        webView.addJavascriptInterface(JSInterface(), "Android")
+        webView.addJavascriptInterface(this, "Android")
 
         webView.webChromeClient = object : WebChromeClient() {
         }
@@ -99,21 +102,25 @@ class MainActivity : BaseActivity(), OnClickListener {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
                 cancelDialog()
+                androidCallToken()
             }
         }
     }
 
     /**
-     * js调用android
+     * 把token传给js
      */
-    private class JSInterface {
-        @JavascriptInterface
-        fun jsCallAndroid() {
-        }
+    private fun androidCallToken() {
+        webView.loadUrl("javascript:getToken('${MyApplication.TOKEN}')")
+    }
 
-        @JavascriptInterface
-        fun jsCallAndroidArgs(args: String?) {
-        }
+    //js调用android登录
+    @SuppressLint("JavascriptInterface")
+    @JavascriptInterface
+    fun jsCallLogin() {
+        MyApplication.clearUserInfo(this)
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
     override fun onPause() {
@@ -195,15 +202,16 @@ class MainActivity : BaseActivity(), OnClickListener {
      */
     private fun okHttpUserinfo() {
         Thread(Runnable {
-            val url = "${CONST.BASE_URL}/guns-cloud-system/entUser/getCurrentUser"
+            val url = "${CONST.BASE_URL}/guns-cloud-two-system/entUser/getCurrentUser"
             OkHttpUtil.enqueue(Request.Builder().url(url).addHeader("Authorization", MyApplication.TOKEN).build(), object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                 }
                 override fun onResponse(call: Call, response: Response) {
-                    if (!response.isSuccessful) {
-                        return
-                    }
+//                    if (!response.isSuccessful) {
+//                        return
+//                    }
                     val result = response.body!!.string()
+                    Log.e("result", result)
                     runOnUiThread {
                         if (!TextUtils.isEmpty(result)) {
                             val obj = JSONObject(result)
@@ -215,8 +223,8 @@ class MainActivity : BaseActivity(), OnClickListener {
                                         if (!dataObj.isNull("account")) {
                                             tvUserName.text = dataObj.getString("account")
                                         }
-                                        if (!dataObj.isNull("name")) {
-                                            tvName.text = dataObj.getString("name")
+                                        if (!dataObj.isNull("userName")) {
+                                            tvName.text = dataObj.getString("userName")
                                         }
                                         if (!dataObj.isNull("sex")) {
                                             val sex = dataObj.getString("sex")
@@ -225,6 +233,13 @@ class MainActivity : BaseActivity(), OnClickListener {
                                             } else {
                                                 tvSex.text = "女"
                                             }
+                                        }
+                                    }
+                                } else {
+                                    if (!obj.isNull("message")) {
+                                        val message = obj.getString("message")
+                                        if (!TextUtils.isEmpty(message)) {
+                                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 }

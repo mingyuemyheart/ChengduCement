@@ -79,8 +79,8 @@ class WelcomeActivity : BaseActivity() {
                                         }
                                         MyApplication.saveUserInfo(this@WelcomeActivity)
                                         val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
-                                        intent.putExtra(CONST.ACTIVITY_NAME, "测试")
-                                        intent.putExtra(CONST.WEB_URL, "http://192.168.1.205:1234/Sandcastle_lightWeight2.0/demo/examples/default/if_ioc_map.html")
+                                        intent.putExtra(CONST.ACTIVITY_NAME, getString(R.string.app_name))
+                                        intent.putExtra(CONST.WEB_URL, CONST.HTMLURL)
                                         startActivity(intent)
                                         finish()
                                     } else {
