@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.layout_middle.*
 import kotlinx.android.synthetic.main.layout_title.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException
 
@@ -75,6 +76,10 @@ class MainActivity : BaseActivity(), OnClickListener {
         val webSettings = webView.settings
         //支持javascript
         webSettings.javaScriptEnabled = true
+        webSettings.allowFileAccess = true// 设置允许访问文件数据
+        webSettings.domStorageEnabled = true
+        webSettings.databaseEnabled = true
+        webSettings.cacheMode = WebSettings.LOAD_NO_CACHE//设置webview缓存模式
         // 设置可以支持缩放
         webSettings.setSupportZoom(true)
         // 设置出现缩放工具
@@ -88,15 +93,24 @@ class MainActivity : BaseActivity(), OnClickListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
-        webView.loadUrl(url)
+        loadWebView(url)
         webView.addJavascriptInterface(this, "Android")
 
         webView.webChromeClient = object : WebChromeClient() {
+            override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+                Log.e("msg", consoleMessage!!.message())
+                return super.onConsoleMessage(consoleMessage)
+            }
+
+            override fun onConsoleMessage(message: String?, lineNumber: Int, sourceID: String?) {
+                Log.e("msg", message)
+                super.onConsoleMessage(message, lineNumber, sourceID)
+            }
         }
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, itemUrl: String): Boolean {
                 webView.loadUrl(itemUrl)
-                return true
+                return false
             }
 
             override fun onPageFinished(view: WebView, url: String) {
@@ -104,6 +118,12 @@ class MainActivity : BaseActivity(), OnClickListener {
                 cancelDialog()
                 androidCallToken()
             }
+        }
+    }
+
+    private fun loadWebView(url: String) {
+        if (!TextUtils.isEmpty(url) && webView != null) {
+            webView.loadUrl(url)
         }
     }
 
@@ -123,12 +143,12 @@ class MainActivity : BaseActivity(), OnClickListener {
         finish()
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (webView != null) {
-            webView!!.reload()
-        }
-    }
+//    override fun onPause() {
+//        super.onPause()
+//        if (webView != null) {
+//            webView!!.reload()
+//        }
+//    }
 
     /**
      * 控制抽屉
@@ -144,9 +164,6 @@ class MainActivity : BaseActivity(), OnClickListener {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             when {
-                webView.canGoBack() -> {
-                    webView.goBack()
-                }
                 drawerlayout.isDrawerOpen(clDrawer) -> drawerlayout.closeDrawer(clDrawer)
                 System.currentTimeMillis() - mExitTime > 2000 -> {
                     Toast.makeText(this, "再按一次退出" + getString(R.string.app_name), Toast.LENGTH_SHORT).show()
@@ -173,6 +190,8 @@ class MainActivity : BaseActivity(), OnClickListener {
                 tvWarning.setTextColor(ContextCompat.getColor(this, R.color.text_color3))
                 tvSetting.setTextColor(ContextCompat.getColor(this, R.color.text_color3))
                 setDrawer()
+                showDialog()
+                loadWebView(CONST.HTMLURL)
             }
             R.id.llWarning -> {
                 ivMonitor.setImageResource(R.drawable.icon_monitor)
@@ -182,6 +201,8 @@ class MainActivity : BaseActivity(), OnClickListener {
                 tvWarning.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
                 tvSetting.setTextColor(ContextCompat.getColor(this, R.color.text_color3))
                 setDrawer()
+                showDialog()
+                loadWebView(CONST.HTMLURL_WARNING)
             }
             R.id.llSetting -> {
                 ivMonitor.setImageResource(R.drawable.icon_monitor)
@@ -258,7 +279,7 @@ class MainActivity : BaseActivity(), OnClickListener {
         Thread(Runnable {
             val url = "${CONST.BASE_URL}/guns-cloud-cdsncioc/cdsnciockzjk/getIocAlarmQuantity"
             val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
-            val body = RequestBody.create(mediaType, "")
+            val body = "".toRequestBody(mediaType)
             OkHttpUtil.enqueue(Request.Builder().url(url).post(body).addHeader("Authorization", MyApplication.TOKEN).build(), object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                 }

@@ -562,6 +562,7 @@ public class CommonUtil {
         } catch (NoSuchAlgorithmException e) {
             return null;
         }
+        Log.e("strDes", strDes);
         return strDes;
     }
 

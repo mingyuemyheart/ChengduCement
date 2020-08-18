@@ -26,6 +26,9 @@
         tools:ignore="LockedOrientationActivity"
         android:theme="@style/AppTheme">
 
+        <!--适配9.0以上https问题-->
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
         <activity
             android:name=".WelcomeActivity"
             android:screenOrientation="portrait">
@@ -39,6 +42,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".X5MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".X5Activity"

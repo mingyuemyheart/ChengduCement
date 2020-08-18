@@ -3,10 +3,12 @@ package com.wazh.shawn.cement
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.wazh.shawn.cement.common.CONST
 import com.wazh.shawn.cement.common.MyApplication
+import com.wazh.shawn.cement.util.CommonUtil
 import com.wazh.shawn.cement.util.OkHttpUtil
 import kotlinx.android.synthetic.main.activity_modify_pwd.*
 import kotlinx.android.synthetic.main.layout_title.*
@@ -54,12 +56,15 @@ class ModifyPwdActivity : BaseActivity(), View.OnClickListener {
         }
         showDialog()
         Thread(Runnable {
-            val url = "${CONST.BASE_URL}/guns-cloud-system/entUser/updatePassword"
+            val url = "${CONST.BASE_URL}/guns-cloud-two-system/entUser/updatePassword"
             val param  = JSONObject()
-            param.put("oldPassword", etPwd.text.toString())
-            param.put("newPassword", etNewPwd.text.toString())
-            param.put("repeatPassword", etNewPwd.text.toString())
+            val paramItem  = JSONObject()
+            paramItem.put("oldPassword", CommonUtil.encrypt(etPwd.text.toString(), "SHA-256"))
+            paramItem.put("newPassword", CommonUtil.encrypt(etNewPwd.text.toString(), "SHA-256"))
+            paramItem.put("repeatPassword", CommonUtil.encrypt(etNewPwd.text.toString(), "SHA-256"))
+            param.put("passwordParam", paramItem)
             val json : String = param.toString()
+            Log.e("json", json)
             val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
             val body = RequestBody.create(mediaType, json)
             OkHttpUtil.enqueue(Request.Builder().url(url).post(body).addHeader("Authorization", MyApplication.TOKEN).build(), object : Callback {

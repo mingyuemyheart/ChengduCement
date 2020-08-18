@@ -10,8 +10,8 @@ android {
         applicationId "com.wazh.shawn.cement"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -45,5 +45,4 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.0.1'
     implementation 'com.squareup.okio:okio:2.2.2'
     implementation 'com.wang.avi:library:1.0.0'
-    implementation files('libs/tbs_sdk_v1.5.1.1057_25436_obfs_20160331_144900.jar')
 }

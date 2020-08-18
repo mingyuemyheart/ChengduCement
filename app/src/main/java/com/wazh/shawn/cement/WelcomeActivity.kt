@@ -36,7 +36,7 @@ class WelcomeActivity : BaseActivity() {
             finish()
             return
         }
-        //点击Home键后再点击APP图标，APP重启而不是回到原来界面
+
         Handler().postDelayed({
             if (!TextUtils.isEmpty(MyApplication.USERNAME) && !TextUtils.isEmpty(MyApplication.PASSWORD)) {
                 okHttpLogin()
