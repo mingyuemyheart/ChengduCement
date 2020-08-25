@@ -55,11 +55,11 @@ class LoginActivity : BaseActivity(), OnClickListener {
 	 */
 	private fun okHttpLogin() {
 		if (TextUtils.isEmpty(etUserName!!.text.toString())) {
-			Toast.makeText(this, "请输入您的账号", Toast.LENGTH_SHORT).show()
+			Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show()
 			return
 		}
 		if (TextUtils.isEmpty(etPwd.text.toString())) {
-			Toast.makeText(this, "请输入您的密码", Toast.LENGTH_SHORT).show()
+			Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show()
 			return
 		}
 		showDialog()

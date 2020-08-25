@@ -44,12 +44,6 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".X5MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".X5Activity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".SettingActivity"
             android:screenOrientation="portrait" />
         <activity
