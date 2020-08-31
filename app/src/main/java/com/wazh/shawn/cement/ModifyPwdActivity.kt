@@ -16,6 +16,7 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONObject
 import java.io.IOException
+import java.util.regex.Pattern
 
 /**
  * 修改密码
@@ -35,6 +36,14 @@ class ModifyPwdActivity : BaseActivity(), View.OnClickListener {
     }
 
     /**
+     * 正则验证，大写、小写、数字、特殊符号
+     */
+    private fun isAvalidPwd(input: String): Boolean {
+        val pattern = "^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,16}$"
+        return Pattern.compile(pattern).matcher(input).matches()
+    }
+
+    /**
      * 修改密码
      */
     private fun okHttpPwd() {
@@ -44,6 +53,10 @@ class ModifyPwdActivity : BaseActivity(), View.OnClickListener {
         }
         if (TextUtils.isEmpty(etNewPwd.text.toString())) {
             Toast.makeText(this, "请输入新密码", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (!isAvalidPwd(etNewPwd.text.toString())) {
+            Toast.makeText(this, "密码要求8~16位大小写字母、数字、特殊字符组合", Toast.LENGTH_SHORT).show()
             return
         }
         if (TextUtils.isEmpty(etPwdConfirm.text.toString())) {
