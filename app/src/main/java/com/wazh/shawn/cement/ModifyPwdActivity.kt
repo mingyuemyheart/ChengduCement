@@ -39,7 +39,7 @@ class ModifyPwdActivity : BaseActivity(), View.OnClickListener {
      * 正则验证，大写、小写、数字、特殊符号
      */
     private fun isAvalidPwd(input: String): Boolean {
-        val pattern = "^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,16}$"
+        val pattern = "^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{6,18}$"
         return Pattern.compile(pattern).matcher(input).matches()
     }
 
